@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bonsai Camp — Presentations</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Sora:wght@300;600;800&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Sora',sans-serif;background:#0B0E0D;color:#E8EAE7;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:2rem;
+    background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:48px 48px}
+  .brand{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;color:#8A9490;text-transform:uppercase;margin-bottom:2.5rem}
+  h1{font-weight:800;font-size:clamp(1.8rem,5vw,2.8rem);letter-spacing:-.02em;margin-bottom:.75rem;text-align:center}
+  .sub{color:#8A9490;font-weight:300;margin-bottom:3rem;text-align:center;max-width:40ch}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem;width:100%;max-width:720px}
+  a.card{text-decoration:none;color:inherit;background:#141B1A;border:1px solid #262C2A;border-radius:12px;padding:2rem;transition:all .2s;display:block}
+  a.card:hover{border-color:#34D399;transform:translateY(-3px)}
+  .tag{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#34D399;margin-bottom:1rem}
+  .ct{font-weight:600;font-size:1.25rem;margin-bottom:.5rem}
+  .cd{color:#8A9490;font-size:.9rem;font-weight:300;line-height:1.5}
+  .arrow{font-family:'JetBrains Mono',monospace;color:#34D399;margin-top:1.25rem;font-size:.85rem}
+  footer{margin-top:3rem;font-family:'JetBrains Mono',monospace;font-size:10px;color:#3D4B5C;letter-spacing:.1em;text-align:center}
+</style>
+</head>
+<body>
+  <div class="brand">Bonsai Camp Ltd · Developers.Institute Mauritius</div>
+  <h1>Our Presentations</h1>
+  <p class="sub">Select the programme you'd like to explore.</p>
+  <div class="cards">
+    <a class="card" href="./cockpit/">
+      <div class="tag">For businesses</div>
+      <div class="ct">AI Cockpit for Business</div>
+      <div class="cd">Live cockpits, workflow automation, and AI transformation — funded through your Training Levy.</div>
+      <div class="arrow">open →</div>
+    </a>
+    <a class="card" href="./bootcamp/">
+      <div class="tag">For individuals</div>
+      <div class="ct">AI Engineering Bootcamp</div>
+      <div class="cd">24 weeks, zero prerequisites. Build and deploy AI agents, RAG systems and intelligent apps.</div>
+      <div class="arrow">open →</div>
+    </a>
+  </div>
+  <footer>MQA APPROVED · HRDC REFUND PATHWAY · MAURITIUS</footer>
+</body>
+</html>

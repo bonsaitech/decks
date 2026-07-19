@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Cockpit for Business — Bonsai Camp</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --void: #0B0E0D;
+    --slate: #171B1A;
+    --steel: #262C2A;
+    --wire: #39413E;
+    --mist: #8A9490;
+    --bone: #E8EAE7;
+    --signal: #34D399;
+    --signal-dim: #1A6E52;
+    --alert: #F0A238;
+    --grid: rgba(255,255,255,0.035);
+  }
+
+  html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--void);
+    color: var(--bone);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── SLIDE FRAME ── */
+  .slide {
+    min-height: 100vh;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 5rem 6vw;
+    position: relative;
+    border-bottom: 1px solid var(--steel);
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+
+  /* slide number — top right, monospace, like an instrument readout */
+  .slide::after {
+    content: attr(data-idx);
+    position: absolute;
+    top: 2.5rem; right: 6vw;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--wire);
+    letter-spacing: 0.1em;
+  }
+
+  .tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--signal);
+    margin-bottom: 1.75rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .tag::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--signal);
+    border-radius: 50%;
+    box-shadow: 0 0 0 3px rgba(52,211,153,0.15);
+  }
+
+  h1 {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2.6rem, 6.5vw, 5.4rem);
+    line-height: 0.96;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+  }
+
+  h2 {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.8rem, 3.6vw, 3rem);
+    line-height: 1.06;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.25rem;
+    max-width: 20ch;
+  }
+
+  .lede {
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
+    color: var(--mist);
+    font-weight: 300;
+    line-height: 1.6;
+    max-width: 58ch;
+  }
+
+  .accent { color: var(--signal); }
+  .amber { color: var(--alert); }
+
+  /* ── SLIDE 01 — COVER ── */
+  #s1 { justify-content: space-between; }
+  .cover-top { display: flex; justify-content: space-between; align-items: flex-start; }
+  .brand {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    color: var(--mist);
+    text-transform: uppercase;
+  }
+  .cred {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: var(--signal);
+    border: 1px solid var(--signal-dim);
+    padding: 6px 14px;
+    border-radius: 3px;
+  }
+  .cover-mid { padding: 3rem 0; }
+  .cover-sub {
+    font-size: clamp(1.05rem, 2vw, 1.6rem);
+    color: var(--mist);
+    font-weight: 300;
+    margin-top: 2rem;
+    max-width: 42ch;
+    line-height: 1.45;
+  }
+  .cover-bottom {
+    display: flex;
+    gap: 3.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--steel);
+    flex-wrap: wrap;
+  }
+  .readout { }
+  .readout-k {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--wire);
+    margin-bottom: 6px;
+  }
+  .readout-v {
+    font-family: 'Archivo', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 600;
+  }
+
+  /* ── SLIDE 02 — THE LEVY HOOK ── */
+  .hook-wrap { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 5rem; align-items: center; }
+
+  .gauge {
+    border: 1px solid var(--steel);
+    background: var(--slate);
+    border-radius: 6px;
+    padding: 2.5rem;
+    position: relative;
+  }
+  .gauge-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--mist);
+    margin-bottom: 1.5rem;
+  }
+  .gauge-num {
+    font-family: 'Archivo', sans-serif;
+    font-size: clamp(4rem, 9vw, 7rem);
+    font-weight: 800;
+    line-height: 0.85;
+    color: var(--signal);
+    letter-spacing: -0.04em;
+  }
+  .gauge-unit {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--mist);
+    margin-top: 1rem;
+    line-height: 1.6;
+  }
+  .gauge-bar {
+    height: 6px;
+    background: var(--steel);
+    border-radius: 99px;
+    margin-top: 2rem;
+    overflow: hidden;
+  }
+  .gauge-fill {
+    width: 90%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--signal-dim), var(--signal));
+    border-radius: 99px;
+  }
+  .gauge-scale {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--wire);
+    margin-top: 8px;
+  }
+
+  .cost-line {
+    margin-top: 2.5rem;
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .cost-strike {
+    font-family: 'Archivo', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--wire);
+    text-decoration: line-through;
+  }
+  .cost-arrow { color: var(--wire); font-family: 'IBM Plex Mono', monospace; }
+  .cost-real {
+    font-family: 'Archivo', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--signal);
+  }
+  .cost-note {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--mist);
+    width: 100%;
+    margin-top: 6px;
+  }
+
+  /* ── GENERIC GRID CARDS ── */
+  .cards {
+    display: grid;
+    gap: 1px;
+    background: var(--steel);
+    border: 1px solid var(--steel);
+    margin-top: 3rem;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .c2 { grid-template-columns: repeat(2, 1fr); }
+  .c3 { grid-template-columns: repeat(3, 1fr); }
+  .c4 { grid-template-columns: repeat(4, 1fr); }
+
+  .card {
+    background: var(--slate);
+    padding: 2rem 1.75rem;
+    transition: background 0.2s;
+  }
+  .card:hover { background: var(--steel); }
+  .card-k {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--signal);
+    margin-bottom: 1rem;
+  }
+  .card-h {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    margin-bottom: 0.6rem;
+    line-height: 1.25;
+  }
+  .card-p {
+    font-size: 0.88rem;
+    color: var(--mist);
+    line-height: 1.55;
+    font-weight: 300;
+  }
+
+  /* ── SLIDE — COCKPIT SHOWCASE ── */
+  .cockpit-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--steel);
+    border: 1px solid var(--steel);
+    margin-top: 2.5rem;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .ck {
+    background: var(--slate);
+    padding: 1.75rem 1.5rem;
+    position: relative;
+    min-height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .ck-sector {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--wire);
+  }
+  .ck-name {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 600;
+    font-size: 1.02rem;
+    line-height: 1.25;
+    margin: 0.75rem 0;
+  }
+  .ck-desc {
+    font-size: 0.8rem;
+    color: var(--mist);
+    line-height: 1.5;
+    font-weight: 300;
+  }
+  .ck-live {
+    position: absolute;
+    top: 1.5rem; right: 1.5rem;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--signal);
+    box-shadow: 0 0 8px var(--signal);
+  }
+
+  /* ── PHASES ── */
+  .phases {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    margin-top: 3rem;
+  }
+  .ph {
+    border: 1px solid var(--steel);
+    border-radius: 4px;
+    padding: 2rem 1.75rem;
+    background: var(--slate);
+    position: relative;
+  }
+  .ph.final { border-color: var(--signal-dim); background: linear-gradient(160deg, var(--slate), rgba(26,110,82,0.12)); }
+  .ph-n {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--signal);
+    letter-spacing: 0.14em;
+    margin-bottom: 1rem;
+  }
+  .ph-h {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+  .ph-list { list-style: none; }
+  .ph-list li {
+    font-size: 0.85rem;
+    color: var(--mist);
+    padding: 5px 0 5px 16px;
+    position: relative;
+    font-weight: 300;
+    line-height: 1.5;
+  }
+  .ph-list li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 12px;
+    width: 5px; height: 1px;
+    background: var(--wire);
+  }
+
+  /* ── PRICING ── */
+  .price-panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--steel);
+    border: 1px solid var(--steel);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 3rem;
+  }
+  .pp {
+    background: var(--slate);
+    padding: 2.5rem;
+  }
+  .pp.net {
+    background: linear-gradient(160deg, rgba(26,110,82,0.18), var(--slate));
+  }
+  .pp-k {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--mist);
+    margin-bottom: 1.25rem;
+  }
+  .pp-v {
+    font-family: 'Archivo', sans-serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .pp.net .pp-v { color: var(--signal); }
+  .pp.gross .pp-v { color: var(--wire); }
+  .pp-sub {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--mist);
+    margin-top: 1rem;
+    line-height: 1.6;
+  }
+
+  /* ── CTA ── */
+  #s9 { align-items: flex-start; }
+  .cta-box {
+    margin-top: 3rem;
+    border: 1px solid var(--signal-dim);
+    background: linear-gradient(140deg, rgba(26,110,82,0.14), transparent);
+    border-radius: 4px;
+    padding: 2.5rem 3rem;
+    max-width: 720px;
+  }
+  .cta-h {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 700;
+    font-size: 1.4rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.3;
+  }
+  .cta-steps { display: grid; gap: 0.85rem; }
+  .cta-step {
+    display: flex;
+    gap: 1rem;
+    align-items: baseline;
+    font-size: 0.95rem;
+    color: var(--mist);
+    font-weight: 300;
+  }
+  .cta-step b {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--signal);
+    flex-shrink: 0;
+    letter-spacing: 0.1em;
+  }
+  .cta-foot {
+    margin-top: 3rem;
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--steel);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--wire);
+    letter-spacing: 0.1em;
+    line-height: 1.9;
+  }
+
+  /* ── MYTH / REALITY ── */
+  .mr { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--steel); border: 1px solid var(--steel); margin-top: 3rem; border-radius: 4px; overflow: hidden; }
+  .mr-col { background: var(--slate); padding: 2.5rem; }
+  .mr-col.real { background: linear-gradient(160deg, rgba(26,110,82,0.14), var(--slate)); }
+  .mr-k { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 1.25rem; color: var(--wire); }
+  .mr-col.real .mr-k { color: var(--signal); }
+  .mr-t { font-family: 'Archivo', sans-serif; font-weight: 600; font-size: 1.15rem; line-height: 1.4; }
+  .mr-col.myth .mr-t { color: var(--mist); }
+
+  @media (max-width: 880px) {
+    .slide { padding: 4rem 7vw; }
+    .hook-wrap, .mr, .price-panel { grid-template-columns: 1fr; }
+    .cards.c4, .cards.c3, .cockpit-grid, .phases { grid-template-columns: 1fr; }
+    .cards.c2 { grid-template-columns: 1fr; }
+    h2 { max-width: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 01 COVER -->
+<section class="slide" id="s1" data-idx="01 / 09">
+  <div class="cover-top">
+    <div class="brand">Bonsai Camp Ltd — Developers.Institute Mauritius</div>
+    <div class="cred">MQA / HRDC APPROVED</div>
+  </div>
+
+  <div class="cover-mid">
+    <div class="tag">AI Cockpit for Business</div>
+    <h1>Stop reporting.<br><span class="accent">Start steering.</span></h1>
+    <p class="cover-sub">We build the cockpit your business runs on — and your Training Levy pays for it.</p>
+  </div>
+
+  <div class="cover-bottom">
+    <div class="readout">
+      <div class="readout-k">Investment</div>
+      <div class="readout-v">25,000 MUR <span style="color:var(--mist);font-weight:400;font-size:0.9rem;">/ participant</span></div>
+    </div>
+    <div class="readout">
+      <div class="readout-k">HRDC Refund</div>
+      <div class="readout-v accent">Up to 90%</div>
+    </div>
+    <div class="readout">
+      <div class="readout-k">Format</div>
+      <div class="readout-v">Assess → Build → Roadmap</div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 THE LEVY HOOK -->
+<section class="slide" id="s2" data-idx="02 / 09">
+  <div class="hook-wrap">
+    <div>
+      <div class="tag">The part nobody tells you</div>
+      <h2>You have already paid for this training.</h2>
+      <p class="lede">Every year your company contributes to the Training Levy. Most of it goes unused — not because you don't need training, but because the HRDC process is opaque and nobody walks you through it.</p>
+      <p class="lede" style="margin-top:1.25rem;">We are MQA and HRDC approved. We handle the paperwork, the submission, and the refund claim. You focus on the outcome.</p>
+
+      <div class="cost-line">
+        <span class="cost-strike">25,000 MUR</span>
+        <span class="cost-arrow">→</span>
+        <span class="cost-real">from 2,500 MUR</span>
+        <span class="cost-note">Net cost per participant after HRDC refund. Subject to eligibility and approval.</span>
+      </div>
+    </div>
+
+    <div class="gauge">
+      <div class="gauge-label">HRDC Refund Coverage</div>
+      <div class="gauge-num">90<span style="font-size:0.4em;">%</span></div>
+      <div class="gauge-unit">of training cost, refundable<br>through your existing Levy contribution</div>
+      <div class="gauge-bar"><div class="gauge-fill"></div></div>
+      <div class="gauge-scale"><span>0%</span><span>MAX REFUND</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 PARTNER / CREDIBILITY -->
+<section class="slide" id="s3" data-idx="03 / 09">
+  <div class="tag">Who you're working with</div>
+  <h2>An approved training institution that also builds the software.</h2>
+  <p class="lede">Developers.Institute Mauritius and Oreegami Mauritius, represented by Bonsai Camp Ltd. Most consultants teach AI. Most agencies build tools. We do both — which is why our training ends in a working system, not a certificate.</p>
+
+  <div class="cards c4">
+    <div class="card">
+      <div class="card-k">01</div>
+      <div class="card-h">Certified</div>
+      <p class="card-p">MQA-approved courses. HRDC-approved refund pathway. Fully compliant from day one.</p>
+    </div>
+    <div class="card">
+      <div class="card-k">02</div>
+      <div class="card-h">Administrative</div>
+      <p class="card-p">We prepare and submit your HRDC file. You don't chase paperwork.</p>
+    </div>
+    <div class="card">
+      <div class="card-k">03</div>
+      <div class="card-h">Technical</div>
+      <p class="card-p">AI engineering, data, automation, low-code. We build, not just advise.</p>
+    </div>
+    <div class="card">
+      <div class="card-k">04</div>
+      <div class="card-h">Local</div>
+      <p class="card-p">Mauritian market, Mauritian regulation, Mauritian clients. We know the terrain.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 04 WHAT IS A COCKPIT -->
+<section class="slide" id="s4" data-idx="04 / 09">
+  <div class="tag">The product</div>
+  <h2>A cockpit is not a dashboard.</h2>
+  <p class="lede">A dashboard shows you what happened. A cockpit tells you what to do about it — and automates the part you'd rather not do by hand.</p>
+
+  <div class="mr">
+    <div class="mr-col myth">
+      <div class="mr-k">What you have today</div>
+      <div class="mr-t">Excel files, exported reports, and someone spending three days a month assembling numbers that are already out of date when they land.</div>
+    </div>
+    <div class="mr-col real">
+      <div class="mr-k">What a cockpit does</div>
+      <div class="mr-t">Live KPIs from your real systems. Manual reporting automated. Alerts when something moves. Decisions made on today's data, not last month's.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 COCKPITS WE'VE BUILT -->
+<section class="slide" id="s5" data-idx="05 / 09">
+  <div class="tag">Deployed systems</div>
+  <h2>Cockpits we have already built.</h2>
+  <p class="lede">Across hospitality, retail, finance and operations. Every one of them started as a manual process someone was dreading each month.</p>
+
+  <div class="cockpit-grid">
+    <div class="ck">
+      <div class="ck-live"></div>
+      <div class="ck-sector">Hospitality</div>
+      <div>
+        <div class="ck-name">Revenue Management Cockpit</div>
+        <p class="ck-desc">Live occupancy, rate positioning and demand signals in one view for hotel management.</p>
+      </div>
+    </div>
+    <div class="ck">
+      <div class="ck-live"></div>
+      <div class="ck-sector">Legal / Admin</div>
+      <div>
+        <div class="ck-name">Contract Management</div>
+        <p class="ck-desc">Contract lifecycle, renewal alerts and obligation tracking — no more missed deadlines.</p>
+      </div>
+    </div>
+    <div class="ck">
+      <div class="ck-live"></div>
+      <div class="ck-sector">Retail</div>
+      <div>
+        <div class="ck-name">Operational Cockpit</div>
+        <p class="ck-desc">Store-level performance, stock movement and daily operations centralised in real time.</p>
+      </div>
+    </div>
+    <div class="ck">
+      <div class="ck-live"></div>
+      <div class="ck-sector">Finance</div>
+      <div>
+        <div class="ck-name">Treasury Forecasting</div>
+        <p class="ck-desc">Cash position and forward projection — built to replace the monthly spreadsheet ritual.</p>
+      </div>
+    </div>
+    <div class="ck">
+      <div class="ck-live"></div>
+      <div class="ck-sector">Project Ops</div>
+      <div>
+        <div class="ck-name">ClickUp Replacement</div>
+        <p class="ck-desc">A custom project system fitted to how the team actually works, not the other way round.</p>
+      </div>
+    </div>
+    <div class="ck">
+      <div class="ck-live"></div>
+      <div class="ck-sector">Customer Service</div>
+      <div>
+        <div class="ck-name">AI Chatbot</div>
+        <p class="ck-desc">First-line customer handling, trained on the company's own documentation and processes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 METHODOLOGY -->
+<section class="slide" id="s6" data-idx="06 / 09">
+  <div class="tag">How it runs</div>
+  <h2>Three phases. One working system at the end.</h2>
+  <p class="lede">This is not a seminar. Your team walks in with a problem and walks out with a roadmap — and in most cases, a first working automation.</p>
+
+  <div class="phases">
+    <div class="ph">
+      <div class="ph-n">PHASE 01</div>
+      <div class="ph-h">Assess<br>& Discover</div>
+      <ul class="ph-list">
+        <li>Business and process review</li>
+        <li>Department interviews</li>
+        <li>AI readiness assessment</li>
+        <li>High-impact opportunities identified</li>
+      </ul>
+    </div>
+    <div class="ph">
+      <div class="ph-n">PHASE 02</div>
+      <div class="ph-h">Practical<br>Workshops</div>
+      <ul class="ph-list">
+        <li>Hands-on AI exercises</li>
+        <li>Your real use cases, not generic ones</li>
+        <li>Low-code / no-code automation</li>
+        <li>Live demonstrations</li>
+      </ul>
+    </div>
+    <div class="ph final">
+      <div class="ph-n">PHASE 03</div>
+      <div class="ph-h">Cockpit<br>& Roadmap</div>
+      <ul class="ph-list">
+        <li>AI Opportunity Report</li>
+        <li>Priority automation use cases</li>
+        <li>Cockpit specification</li>
+        <li>Implementation roadmap</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 07 WHO IT'S FOR -->
+<section class="slide" id="s7" data-idx="07 / 09">
+  <div class="tag">Who should be in the room</div>
+  <h2>No coding. No technical background. No exceptions.</h2>
+  <p class="lede">The people who know where the time is wasted are the ones running the process — not the IT department. That is who this programme is built for.</p>
+
+  <div class="cards c4">
+    <div class="card">
+      <div class="card-k">Leadership</div>
+      <div class="card-h">CEOs & Directors</div>
+      <p class="card-p">Set the AI agenda and see where the real operational leverage sits.</p>
+    </div>
+    <div class="card">
+      <div class="card-k">People</div>
+      <div class="card-h">HR & Admin</div>
+      <p class="card-p">Automate onboarding, document generation and approval chains.</p>
+    </div>
+    <div class="card">
+      <div class="card-k">Numbers</div>
+      <div class="card-h">Finance & Ops</div>
+      <p class="card-p">Replace manual reporting with live cockpits and forecasting.</p>
+    </div>
+    <div class="card">
+      <div class="card-k">Growth</div>
+      <div class="card-h">Sales & Service</div>
+      <p class="card-p">Faster proposals, automated follow-up, AI-assisted customer handling.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 08 PRICING -->
+<section class="slide" id="s8" data-idx="08 / 09">
+  <div class="tag">The numbers</div>
+  <h2>What it costs — and what it actually costs.</h2>
+  <p class="lede">The list price is not the price you pay. Your Training Levy contribution is already sitting with the HRDC. We help you claim it back.</p>
+
+  <div class="price-panel">
+    <div class="pp gross">
+      <div class="pp-k">List price</div>
+      <div class="pp-v">25,000</div>
+      <div class="pp-sub">MUR per participant<br>Full programme — assessment, workshops, roadmap</div>
+    </div>
+    <div class="pp net">
+      <div class="pp-k">Your net cost</div>
+      <div class="pp-v">from 2,500</div>
+      <div class="pp-sub">MUR per participant, after up to 90% HRDC refund<br>Subject to eligibility. We prepare and submit the file.</div>
+    </div>
+  </div>
+
+  <p class="lede" style="margin-top:2rem;font-size:0.9rem;">We handle the full HRDC application process and documentation. If your company is levy-compliant, the refund pathway is straightforward — most companies simply never start it.</p>
+</section>
+
+<!-- 09 CTA -->
+<section class="slide" id="s9" data-idx="09 / 09">
+  <div class="tag">Next step</div>
+  <h2>Start with the audit. It costs you nothing.</h2>
+  <p class="lede">Before you commit to any training, we tell you exactly how much Levy you have available and what it can fund.</p>
+
+  <div class="cta-box">
+    <div class="cta-h">The Training Levy Audit — complimentary</div>
+    <div class="cta-steps">
+      <div class="cta-step"><b>STEP 01</b><span>We review your Levy contributions and calculate your available balance.</span></div>
+      <div class="cta-step"><b>STEP 02</b><span>We map your departments and identify where automation would pay off first.</span></div>
+      <div class="cta-step"><b>STEP 03</b><span>You get a written report: available funds, priority use cases, recommended roadmap.</span></div>
+      <div class="cta-step"><b>STEP 04</b><span>You decide whether to proceed. No obligation, no cost.</span></div>
+    </div>
+  </div>
+
+  <div class="cta-foot">
+    BONSAI CAMP LTD &nbsp;·&nbsp; DEVELOPERS.INSTITUTE MAURITIUS &nbsp;·&nbsp; OREEGAMI MAURITIUS<br>
+    MQA APPROVED &nbsp;·&nbsp; HRDC APPROVED &nbsp;·&nbsp; PORT LOUIS, MAURITIUS
+  </div>
+</section>
+
+</body>
+</html>

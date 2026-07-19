@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Engineering Bootcamp — Developers.Institute Mauritius</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;0,800;1,400&family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0D1117;          /* editor background */
+    --panel: #141B23;       /* panel */
+    --panel2: #1B242E;      /* raised panel */
+    --line: #263140;        /* borders */
+    --gutter: #3D4B5C;      /* line numbers */
+    --text: #E6EDF3;        /* main text */
+    --dim: #7D8B99;         /* comments */
+    --cyan: #4DD0E1;        /* type/keyword */
+    --green: #7EE787;       /* string/success */
+    --orange: #FFA657;      /* number/warning */
+    --purple: #B392F0;      /* function */
+  }
+
+  html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Sora', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .slide {
+    min-height: 100vh;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 5rem 7vw;
+    position: relative;
+    border-bottom: 1px solid var(--line);
+  }
+
+  /* line-number gutter down the left edge */
+  .slide::before {
+    content: attr(data-ln);
+    position: absolute;
+    left: 2vw;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--gutter);
+    white-space: pre-line;
+    line-height: 2.2;
+    text-align: right;
+    user-select: none;
+  }
+
+  .comment {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--dim);
+    margin-bottom: 1.5rem;
+    display: block;
+  }
+  .comment::before { content: '// '; color: var(--gutter); }
+
+  h1 {
+    font-family: 'Sora', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2.4rem, 6vw, 4.8rem);
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+  }
+
+  h2 {
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.7rem, 3.4vw, 2.7rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.25rem;
+    max-width: 22ch;
+  }
+
+  .lede {
+    font-size: clamp(0.98rem, 1.4vw, 1.15rem);
+    color: var(--dim);
+    font-weight: 300;
+    line-height: 1.65;
+    max-width: 60ch;
+  }
+
+  .cy { color: var(--cyan); }
+  .gr { color: var(--green); }
+  .or { color: var(--orange); }
+  .pu { color: var(--purple); }
+
+  /* ── TERMINAL WINDOW ── */
+  .term {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.45);
+  }
+  .term-bar {
+    background: var(--panel2);
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid var(--line);
+  }
+  .dot { width: 11px; height: 11px; border-radius: 50%; }
+  .dot:nth-child(1) { background: #FF5F57; }
+  .dot:nth-child(2) { background: #FEBC2E; }
+  .dot:nth-child(3) { background: #28C840; }
+  .term-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--dim);
+    margin-left: 10px;
+  }
+  .term-body {
+    padding: 1.75rem 2rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(0.85rem, 1.4vw, 1.02rem);
+    line-height: 2;
+  }
+  .prompt { color: var(--green); }
+  .typed::after {
+    content: '▊';
+    color: var(--cyan);
+    animation: blink 1.1s steps(1) infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { .typed::after { animation: none; } }
+
+  /* ── COVER ── */
+  #s1 { justify-content: space-between; }
+  .cover-head { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+  .brand {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--dim);
+    letter-spacing: 0.08em;
+  }
+  .brand b { color: var(--text); font-weight: 700; }
+  .cohort {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--green);
+    border: 1px solid rgba(126,231,135,0.35);
+    background: rgba(126,231,135,0.06);
+    padding: 6px 14px;
+    border-radius: 100px;
+  }
+  .cover-main { padding: 3rem 0; max-width: 900px; }
+  .cover-title-sub {
+    font-size: clamp(1rem, 1.8vw, 1.35rem);
+    color: var(--dim);
+    font-weight: 300;
+    margin-top: 1.75rem;
+    max-width: 46ch;
+    line-height: 1.5;
+  }
+  .specs {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .spec { background: var(--panel); padding: 1.4rem 1.5rem; }
+  .spec-k {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--dim);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-bottom: 8px;
+  }
+  .spec-v { font-weight: 700; font-size: 1.05rem; line-height: 1.3; }
+
+  /* ── PRICE HOOK ── */
+  .price-hook { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  .code-block {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 2rem 2.25rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(0.85rem, 1.3vw, 1rem);
+    line-height: 2.1;
+  }
+  .cb-ln { color: var(--gutter); user-select: none; display: inline-block; width: 2.2em; }
+  .strike { text-decoration: line-through; color: var(--gutter); }
+
+  /* ── VS GRID ── */
+  .vs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 3rem;
+  }
+  .vs-col { background: var(--panel); padding: 2.5rem; }
+  .vs-col.win { background: linear-gradient(160deg, rgba(77,208,225,0.07), var(--panel)); }
+  .vs-k {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+    color: var(--gutter);
+  }
+  .vs-col.win .vs-k { color: var(--cyan); }
+  .vs-t { font-weight: 600; font-size: 1.1rem; line-height: 1.5; color: var(--dim); }
+  .vs-col.win .vs-t { color: var(--text); }
+
+  /* ── PHASES / PIPELINE ── */
+  .pipeline { margin-top: 3rem; display: grid; gap: 0.85rem; }
+  .stage {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 2rem;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 1.6rem 2rem;
+    align-items: start;
+  }
+  .stage-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    line-height: 1.8;
+  }
+  .stage-tag .ph { color: var(--purple); font-weight: 700; }
+  .stage-tag .wk { color: var(--gutter); display: block; }
+  .stage-h { font-weight: 700; font-size: 1.12rem; margin-bottom: 0.5rem; }
+  .stage-p { font-size: 0.88rem; color: var(--dim); font-weight: 300; line-height: 1.6; }
+  .stage-mods {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--cyan);
+    margin-top: 0.75rem;
+  }
+
+  /* ── STACK ── */
+  .stack-rows { margin-top: 3rem; display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  .stack-row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    background: var(--panel);
+    align-items: center;
+  }
+  .stack-cat {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--dim);
+    text-transform: uppercase;
+    padding: 1.4rem 1.75rem;
+    border-right: 1px solid var(--line);
+  }
+  .stack-items {
+    padding: 1.1rem 1.75rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+  .chip {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    padding: 5px 13px;
+    border-radius: 5px;
+    border: 1px solid var(--line);
+    background: var(--panel2);
+    color: var(--text);
+  }
+  .chip.hot { border-color: rgba(255,166,87,0.4); color: var(--orange); }
+
+  /* ── CAPSTONE ── */
+  .capstone { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  .deliv { list-style: none; margin-top: 1.75rem; }
+  .deliv li {
+    font-size: 0.95rem;
+    padding: 0.7rem 0 0.7rem 2rem;
+    position: relative;
+    border-bottom: 1px solid var(--line);
+    font-weight: 300;
+    color: var(--dim);
+  }
+  .deliv li b { color: var(--text); font-weight: 600; }
+  .deliv li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--green);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* ── SUPPORT CARDS ── */
+  .sup {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 3rem;
+  }
+  .sup-c { background: var(--panel); padding: 2.25rem 2rem; }
+  .sup-icon {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.3rem;
+    color: var(--cyan);
+    margin-bottom: 1.25rem;
+    display: block;
+  }
+  .sup-h { font-weight: 700; font-size: 1.05rem; margin-bottom: 0.6rem; }
+  .sup-p { font-size: 0.87rem; color: var(--dim); font-weight: 300; line-height: 1.6; }
+
+  /* ── INVESTMENT ── */
+  .invest {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 3rem;
+  }
+  .inv { background: var(--panel); padding: 2.75rem; }
+  .inv.hl { background: linear-gradient(160deg, rgba(126,231,135,0.08), var(--panel)); }
+  .inv-k {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 1.25rem;
+  }
+  .inv-v {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .inv.hl .inv-v { color: var(--green); }
+  .inv-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    color: var(--dim);
+    margin-top: 1.1rem;
+    line-height: 1.8;
+  }
+
+  /* ── CTA ── */
+  .cta-term { max-width: 760px; margin-top: 3rem; }
+  .wa {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 2.5rem;
+    background: var(--green);
+    color: #06220C;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 16px 34px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-family: 'Sora', sans-serif;
+    transition: transform 0.15s;
+  }
+  .wa:hover { transform: translateY(-2px); }
+  .foot {
+    margin-top: 3.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--gutter);
+    line-height: 2;
+    letter-spacing: 0.05em;
+  }
+
+  @media (max-width: 900px) {
+    .slide { padding: 4rem 8vw; }
+    .slide::before { display: none; }
+    .price-hook, .vs, .capstone, .invest { grid-template-columns: 1fr; }
+    .specs { grid-template-columns: 1fr 1fr; }
+    .sup { grid-template-columns: 1fr; }
+    .stage { grid-template-columns: 1fr; gap: 0.75rem; }
+    .stack-row { grid-template-columns: 1fr; }
+    .stack-cat { border-right: none; border-bottom: 1px solid var(--line); padding-bottom: 0.9rem; }
+    h2 { max-width: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 01 — COVER -->
+<section class="slide" id="s1" data-ln="01&#10;02&#10;03&#10;04&#10;05">
+  <div class="cover-head">
+    <div class="brand"><b>Developers.Institute</b> Mauritius — represented by Bonsai Camp Ltd</div>
+    <div class="cohort">● ENROLMENTS OPEN — NEXT COHORT</div>
+  </div>
+
+  <div class="cover-main">
+    <span class="comment">career_path.upgrade()</span>
+    <h1>AI Engineering<br><span class="cy">Bootcamp</span></h1>
+    <p class="cover-title-sub">24 weeks. Zero prerequisites. You walk in never having written a line of code — you walk out having built and deployed AI agents, RAG systems and intelligent applications.</p>
+  </div>
+
+  <div class="specs">
+    <div class="spec"><div class="spec-k">Duration</div><div class="spec-v">24 weeks<br><span style="color:var(--dim);font-weight:400;font-size:0.85rem;">6 months, part-time</span></div></div>
+    <div class="spec"><div class="spec-k">Schedule</div><div class="spec-v">Thu 18:30–21:30<br><span style="color:var(--dim);font-weight:400;font-size:0.85rem;">+ Sat 09:30–12:30 hybrid</span></div></div>
+    <div class="spec"><div class="spec-k">Prerequisites</div><div class="spec-v cy">None<br><span style="color:var(--dim);font-weight:400;font-size:0.85rem;">true beginner-friendly</span></div></div>
+    <div class="spec"><div class="spec-k">Location</div><div class="spec-v">Nouvelle Usine<br><span style="color:var(--dim);font-weight:400;font-size:0.85rem;">Floréal + online</span></div></div>
+  </div>
+</section>
+
+<!-- 02 — PRICE + FUNDING HOOK -->
+<section class="slide" id="s2" data-ln="06&#10;07&#10;08&#10;09&#10;10">
+  <div class="price-hook">
+    <div>
+      <span class="comment">the question you were going to ask anyway</span>
+      <h2>The price, upfront. And how to not pay all of it.</h2>
+      <p class="lede">The full programme is 80,000 MUR. If your employer sends you, the company can reclaim up to 90% through its HRDC Training Levy — money it has already contributed. We prepare the entire refund file.</p>
+      <p class="lede" style="margin-top:1.25rem;">Self-funded? Instalment plans are available. Ask us on WhatsApp.</p>
+    </div>
+
+    <div class="code-block">
+      <div><span class="cb-ln">1</span><span class="pu">const</span> bootcamp = {</div>
+      <div><span class="cb-ln">2</span>&nbsp;&nbsp;list_price: <span class="or">80_000</span>, <span style="color:var(--gutter)">// MUR</span></div>
+      <div><span class="cb-ln">3</span>&nbsp;&nbsp;hrdc_refund: <span class="or">0.90</span>, <span style="color:var(--gutter)">// employer route</span></div>
+      <div><span class="cb-ln">4</span>&nbsp;&nbsp;net_cost: <span class="gr">"from 8,000 MUR"</span>,</div>
+      <div><span class="cb-ln">5</span>&nbsp;&nbsp;paperwork: <span class="cy">handled_by_us</span>,</div>
+      <div><span class="cb-ln">6</span>&nbsp;&nbsp;certification: <span class="gr">"MQA approved"</span></div>
+      <div><span class="cb-ln">7</span>};</div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 — POSITIONING -->
+<section class="slide" id="s3" data-ln="11&#10;12&#10;13&#10;14&#10;15">
+  <span class="comment">why this is not another chatgpt course</span>
+  <h2>Anyone can use AI. Almost nobody can build it.</h2>
+  <p class="lede">Prompt courses teach you to talk to someone else's AI. This bootcamp teaches you to engineer your own — systems connected to real data, real APIs, and real business problems.</p>
+
+  <div class="vs">
+    <div class="vs-col">
+      <div class="vs-k">using AI tools</div>
+      <div class="vs-t">Typing prompts into a chat window. Copy, paste, hope. The skill everyone will have by next year.</div>
+    </div>
+    <div class="vs-col win">
+      <div class="vs-k">building AI capabilities</div>
+      <div class="vs-t">Designing RAG pipelines on private data. Deploying autonomous agents. Shipping applications. The skill companies are hiring for right now.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 — CURRICULUM -->
+<section class="slide" id="s4" data-ln="16&#10;17&#10;18&#10;19&#10;20">
+  <span class="comment">the pipeline: 13 modules, 4 phases</span>
+  <h2>From first line of Python to deployed AI agent.</h2>
+
+  <div class="pipeline">
+    <div class="stage">
+      <div class="stage-tag"><span class="ph">PHASE 1</span><span class="wk">weeks 01–06</span></div>
+      <div>
+        <div class="stage-h">Foundations & Programming Mechanics</div>
+        <p class="stage-p">Demystify AI, then learn to code from absolute zero. Variables, functions, object-oriented Python — the language everything else is built on.</p>
+        <div class="stage-mods">M1 AI Foundations · M2 Python Fundamentals · M3 OOP</div>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="stage-tag"><span class="ph">PHASE 2</span><span class="wk">weeks 07–12</span></div>
+      <div>
+        <div class="stage-h">Data Intelligence & Machine Learning</div>
+        <p class="stage-p">Clean real-world data, visualise it, then build your first predictive models and teach machines to read human language.</p>
+        <div class="stage-mods">M4 Data Prep · M5 Analysis & Viz · M6 ML Fundamentals · M7 NLP</div>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="stage-tag"><span class="ph">PHASE 3</span><span class="wk">weeks 13–18</span></div>
+      <div>
+        <div class="stage-h">Generative AI & RAG Systems</div>
+        <p class="stage-p">Work directly with LLMs. Master prompt engineering, then build knowledge assistants connected to private data with vector databases and semantic search.</p>
+        <div class="stage-mods">M8 GenAI Engineering · M9 Prompt Engineering · M10 RAG</div>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="stage-tag"><span class="ph">PHASE 4</span><span class="wk">weeks 19–24</span></div>
+      <div>
+        <div class="stage-h">Autonomous Agents & Deployment</div>
+        <p class="stage-p">Build agents with memory and tool use, connect them to external APIs, and deploy production architectures. Then prove it all with your capstone.</p>
+        <div class="stage-mods">M11 AI Agents & Agentic AI · M12 Integrations & Deployment · M13 Capstone</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 — STACK -->
+<section class="slide" id="s5" data-ln="21&#10;22&#10;23&#10;24&#10;25">
+  <span class="comment">import industry_standard_tools</span>
+  <h2>The stack you'll actually be hired for.</h2>
+  <p class="lede">No proprietary sandbox tools. Every technology in this programme is what AI teams use in production today.</p>
+
+  <div class="stack-rows">
+    <div class="stack-row">
+      <div class="stack-cat">Core & Data</div>
+      <div class="stack-items">
+        <span class="chip">Python</span><span class="chip">Jupyter</span><span class="chip">Pandas</span><span class="chip">NumPy</span><span class="chip">Matplotlib</span><span class="chip">Git & GitHub</span>
+      </div>
+    </div>
+    <div class="stack-row">
+      <div class="stack-cat">ML & NLP</div>
+      <div class="stack-items">
+        <span class="chip">Scikit-Learn</span><span class="chip">NLTK</span><span class="chip">SpaCy</span>
+      </div>
+    </div>
+    <div class="stack-row">
+      <div class="stack-cat">LLMs & Models</div>
+      <div class="stack-items">
+        <span class="chip">OpenAI API</span><span class="chip">Hugging Face</span><span class="chip">Mistral</span><span class="chip">Open-source LLMs</span>
+      </div>
+    </div>
+    <div class="stack-row">
+      <div class="stack-cat">Advanced</div>
+      <div class="stack-items">
+        <span class="chip hot">LangChain</span><span class="chip hot">ChromaDB / FAISS</span><span class="chip hot">RAG</span><span class="chip hot">AI Agents</span><span class="chip hot">Agentic AI</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 — CAPSTONE -->
+<section class="slide" id="s6" data-ln="26&#10;27&#10;28&#10;29&#10;30">
+  <div class="capstone">
+    <div>
+      <span class="comment">module 13 — where it all compiles</span>
+      <h2>You graduate with a product, not a certificate.</h2>
+      <p class="lede">The capstone is a complete AI system you design, build and deploy from scratch — presented to instructors and showcased in your professional portfolio. When a recruiter asks "what have you built?", you have an answer with a URL.</p>
+      <ul class="deliv">
+        <li><b>Functional application</b> — deployed and working</li>
+        <li><b>Technical documentation</b> — written like a professional</li>
+        <li><b>Project presentation</b> — defended in front of a jury</li>
+        <li><b>Portfolio showcase</b> — your proof of capability</li>
+      </ul>
+    </div>
+    <div class="term">
+      <div class="term-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="term-title">capstone_ideas.sh</span></div>
+      <div class="term-body">
+        <div><span class="prompt">$</span> ai customer-support assistant</div>
+        <div><span class="prompt">$</span> ai knowledge-management system</div>
+        <div><span class="prompt">$</span> ai document-intelligence engine</div>
+        <div><span class="prompt">$</span> ai recruitment / research agent</div>
+        <div style="margin-top:0.5rem;"><span class="prompt">$</span> <span class="typed">or the idea you already have_</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 — SUPPORT -->
+<section class="slide" id="s7" data-ln="31&#10;32&#10;33&#10;34&#10;35">
+  <span class="comment">support_system.always_on()</span>
+  <h2>Six months is long. You won't do it alone.</h2>
+  <p class="lede">The difference between finishing a bootcamp and abandoning one is the support structure around it.</p>
+
+  <div class="sup">
+    <div class="sup-c">
+      <span class="sup-icon">&lt;/&gt;</span>
+      <div class="sup-h">Lifetime learning platform</div>
+      <p class="sup-p">Session recordings, exercises and materials — yours forever. Review at your own pace, anytime.</p>
+    </div>
+    <div class="sup-c">
+      <span class="sup-icon">1:1</span>
+      <div class="sup-h">Personalised mentoring</div>
+      <p class="sup-p">Direct chat for Q&A, one-on-one mentoring sessions on request, and prep material so you never fall behind.</p>
+    </div>
+    <div class="sup-c">
+      <span class="sup-icon">{ }</span>
+      <div class="sup-h">Career support</div>
+      <p class="sup-p">Portfolio polish, CV strengthening, and technical interview preparation. Plus an alumni network that hires.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 08 — INVESTMENT -->
+<section class="slide" id="s8" data-ln="36&#10;37&#10;38&#10;39&#10;40">
+  <span class="comment">total_cost_of_ownership</span>
+  <h2>The investment — both routes.</h2>
+  <p class="lede">Two ways in. If your employer sponsors you, the company recovers most of the cost through its Training Levy. We handle the HRDC file end to end.</p>
+
+  <div class="invest">
+    <div class="inv">
+      <div class="inv-k">Self-funded</div>
+      <div class="inv-v">80,000</div>
+      <div class="inv-sub">MUR — full programme<br>Instalment plans available<br>MQA-approved certification included</div>
+    </div>
+    <div class="inv hl">
+      <div class="inv-k">Employer-sponsored · HRDC route</div>
+      <div class="inv-v">from 8,000</div>
+      <div class="inv-sub">MUR net per employee, after up to 90% Levy refund<br>Subject to eligibility — we prepare & submit the file<br>Your company has already contributed the funds</div>
+    </div>
+  </div>
+
+  <p class="lede" style="margin-top:2rem;font-size:0.88rem;">Talking to your employer about sponsorship? We provide a ready-made business case you can forward to your HR or training manager.</p>
+</section>
+
+<!-- 09 — CTA -->
+<section class="slide" id="s9" data-ln="41&#10;42&#10;43&#10;44&#10;45">
+  <span class="comment">next_step — takes two minutes</span>
+  <h2>The next cohort is filling. Compile your future.</h2>
+
+  <div class="term cta-term">
+    <div class="term-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="term-title">enrol.sh</span></div>
+    <div class="term-body">
+      <div><span class="prompt">$</span> whatsapp <span class="or">5500 9123</span> <span style="color:var(--gutter)"># fastest — ask anything</span></div>
+      <div><span class="prompt">$</span> visit Nouvelle Usine, Floréal <span style="color:var(--gutter)"># come see a session</span></div>
+      <div><span class="prompt">$</span> request employer sponsorship pack <span style="color:var(--gutter)"># we send the HRDC business case</span></div>
+      <div style="margin-top:0.5rem;"><span class="prompt">$</span> <span class="gr">seat.reserve()</span> <span class="typed"></span></div>
+    </div>
+  </div>
+
+  <a class="wa" href="https://wa.me/2305500 9123">→ Message us on WhatsApp — 5500 9123</a>
+
+  <div class="foot">
+    DEVELOPERS.INSTITUTE MAURITIUS · REPRESENTED BY BONSAI CAMP LTD<br>
+    MQA APPROVED · HRDC REFUND PATHWAY · NOUVELLE USINE, FLORÉAL, MAURITIUS
+  </div>
+</section>
+
+</body>
+</html>
