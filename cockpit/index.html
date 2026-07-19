@@ -332,6 +332,135 @@
     box-shadow: 0 0 8px var(--signal);
   }
 
+  /* ── MOCKUP SHOWCASE ── */
+  .showcase { margin-top: 2rem; }
+  .shot {
+    background: var(--slate);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+    max-width: 780px;
+    margin: 0 auto;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+  }
+  .shot-cap { max-width: 780px; margin-left: auto; margin-right: auto; }
+  .shot-bar {
+    background: var(--steel);
+    padding: 9px 14px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    border-bottom: 1px solid var(--line);
+  }
+  .shot-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .shot-dot.r { background: #FF5F57; }
+  .shot-dot.y { background: #FEBC2E; }
+  .shot-dot.g { background: #28C840; }
+  .shot-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--mist);
+    margin-left: 8px;
+  }
+  .shot svg { display: block; width: 100%; height: auto; }
+  .shot-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .shot-tab {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: 1px solid var(--line);
+    background: var(--slate);
+    color: var(--mist);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .shot-tab:hover { color: var(--text); border-color: var(--wire); }
+  .shot-tab.active { background: var(--signal-dim); color: var(--bone); border-color: var(--signal); }
+  .shot-panel { display: none; }
+  .shot-panel.active { display: block; }
+  .shot-cap {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--mist);
+    margin-top: 1rem;
+    line-height: 1.6;
+  }
+  .shot-tabs { max-width: 780px; margin-left: auto; margin-right: auto; }
+  .shot-cap b { color: var(--signal); }
+
+  /* ── CASE STUDIES ── */
+  .cases { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2.5rem; }
+  .case {
+    background: var(--slate);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .case-head {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .case-sector {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--signal);
+  }
+  .case-name {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-top: 3px;
+  }
+  .case-body { padding: 1.5rem; }
+  .case-block { margin-bottom: 1.25rem; }
+  .case-block:last-child { margin-bottom: 0; }
+  .case-lbl {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .case-lbl.before { color: var(--wire); }
+  .case-lbl.after { color: var(--signal); }
+  .case-text { font-size: 0.85rem; color: var(--mist); line-height: 1.6; font-weight: 300; }
+  .case-text b { color: var(--text); font-weight: 500; }
+  .sectors-strip {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+  }
+  .sectors-lbl {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--mist);
+    margin-bottom: 0.85rem;
+  }
+  .sectors-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .sector-chip {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    padding: 5px 12px;
+    border-radius: 5px;
+    border: 1px solid var(--line);
+    background: var(--slate);
+    color: var(--text);
+  }
+
   /* ── PHASES ── */
   .phases {
     display: grid;
@@ -486,7 +615,7 @@
 <body>
 
 <!-- 01 COVER -->
-<section class="slide" id="s1" data-idx="01 / 09">
+<section class="slide" id="s1" data-idx="01 / 10">
   <div class="cover-top">
     <div class="brand">Bonsai Camp Ltd — Developers.Institute Mauritius</div>
     <div class="cred">MQA / HRDC APPROVED</div>
@@ -515,7 +644,7 @@
 </section>
 
 <!-- 02 THE LEVY HOOK -->
-<section class="slide" id="s2" data-idx="02 / 09">
+<section class="slide" id="s2" data-idx="02 / 10">
   <div class="hook-wrap">
     <div>
       <div class="tag">The part nobody tells you</div>
@@ -542,7 +671,7 @@
 </section>
 
 <!-- 03 PARTNER / CREDIBILITY -->
-<section class="slide" id="s3" data-idx="03 / 09">
+<section class="slide" id="s3" data-idx="03 / 10">
   <div class="tag">Who you're working with</div>
   <h2>An approved training institution that also builds the software.</h2>
   <p class="lede">Developers.Institute Mauritius and Oreegami Mauritius, represented by Bonsai Camp Ltd. Most consultants teach AI. Most agencies build tools. We do both — which is why our training ends in a working system, not a certificate.</p>
@@ -572,7 +701,7 @@
 </section>
 
 <!-- 04 WHAT IS A COCKPIT -->
-<section class="slide" id="s4" data-idx="04 / 09">
+<section class="slide" id="s4" data-idx="04 / 10">
   <div class="tag">The product</div>
   <h2>A cockpit is not a dashboard.</h2>
   <p class="lede">A dashboard shows you what happened. A cockpit tells you what to do about it — and automates the part you'd rather not do by hand.</p>
@@ -589,106 +718,393 @@
   </div>
 </section>
 
-<!-- 05 COCKPITS WE'VE BUILT -->
-<section class="slide" id="s5" data-idx="05 / 09">
-  <div class="tag">Deployed systems</div>
-  <h2>Cockpits we have already built.</h2>
-  <p class="lede">Across hospitality, retail, finance and operations. Every one of them started as a manual process someone was dreading each month.</p>
+<!-- 05 COCKPIT SHOWCASE (VISUAL PROOF) -->
+<section class="slide" id="s5" data-idx="05 / 10">
+  <div class="tag">Deployed systems &mdash; real screens</div>
+  <h2>This is what a cockpit actually looks like.</h2>
+  <p class="lede">Not slideware. Working systems we've built and deployed &mdash; anonymised here, live in our clients' businesses. Switch between three of them.</p>
 
-  <div class="cockpit-grid">
-    <div class="ck">
-      <div class="ck-live"></div>
-      <div class="ck-sector">Hospitality</div>
-      <div>
-        <div class="ck-name">Revenue Management Cockpit</div>
-        <p class="ck-desc">Live occupancy, rate positioning and demand signals in one view for hotel management.</p>
+  <div class="showcase">
+    <div class="shot-tabs">
+      <button class="shot-tab active" onclick="showShot(0, this)">Hospitality &middot; Revenue</button>
+      <button class="shot-tab" onclick="showShot(1, this)">Construction &middot; Operations</button>
+      <button class="shot-tab" onclick="showShot(2, this)">Finance &middot; P&amp;L</button>
+    </div>
+
+    <div class="shot-panel active">
+      <div class="shot">
+        <div class="shot-bar"><span class="shot-dot r"></span><span class="shot-dot y"></span><span class="shot-dot g"></span><span class="shot-label">revenue-cockpit &mdash; portfolio view</span></div>
+        <svg viewBox="0 0 900 420" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
+  <rect width="900" height="420" fill="#101413"/>
+
+  <!-- Top bar -->
+  <rect width="900" height="44" fill="#171B1A"/>
+  <line x1="0" y1="44" x2="900" y2="44" stroke="#262C2A"/>
+  <circle cx="24" cy="22" r="7" fill="#34D399"/>
+  <text x="40" y="26" fill="#E8EAE7" font-size="13" font-weight="600">Revenue Cockpit</text>
+  <text x="720" y="26" fill="#8A9490" font-size="10" font-family="monospace">MARCH 2026 · LIVE</text>
+  <circle cx="864" cy="22" r="3" fill="#34D399"/>
+
+  <!-- KPI row -->
+  <g font-family="monospace">
+    <rect x="24" y="64" width="196" height="70" rx="8" fill="#171B1A" stroke="#262C2A"/>
+    <text x="40" y="86" fill="#8A9490" font-size="8" letter-spacing="1.5">OCCUPANCY</text>
+    <text x="40" y="116" fill="#34D399" font-size="26" font-weight="700" font-family="Inter">87.4%</text>
+    <text x="150" y="116" fill="#8A9490" font-size="9">+4.2 LY</text>
+
+    <rect x="232" y="64" width="196" height="70" rx="8" fill="#171B1A" stroke="#262C2A"/>
+    <text x="248" y="86" fill="#8A9490" font-size="8" letter-spacing="1.5">ADR</text>
+    <text x="248" y="116" fill="#E8EAE7" font-size="26" font-weight="700" font-family="Inter">€412</text>
+    <text x="340" y="116" fill="#34D399" font-size="9">+6.1%</text>
+
+    <rect x="440" y="64" width="196" height="70" rx="8" fill="#171B1A" stroke="#262C2A"/>
+    <text x="456" y="86" fill="#8A9490" font-size="8" letter-spacing="1.5">REVPAR</text>
+    <text x="456" y="116" fill="#E8EAE7" font-size="26" font-weight="700" font-family="Inter">€360</text>
+    <text x="550" y="116" fill="#34D399" font-size="9">+10.8%</text>
+
+    <rect x="648" y="64" width="228" height="70" rx="8" fill="#171B1A" stroke="#1A6E52"/>
+    <text x="664" y="86" fill="#34D399" font-size="8" letter-spacing="1.5">PICKUP TODAY</text>
+    <text x="664" y="116" fill="#34D399" font-size="26" font-weight="700" font-family="Inter">+18</text>
+    <text x="740" y="116" fill="#8A9490" font-size="9">room nights</text>
+  </g>
+
+  <!-- Forecast bars -->
+  <rect x="24" y="154" width="540" height="240" rx="8" fill="#171B1A" stroke="#262C2A"/>
+  <text x="40" y="178" fill="#8A9490" font-size="9" font-family="monospace" letter-spacing="1.5">12-MONTH FORECAST · OTB vs BUDGET</text>
+  <line x1="40" y1="360" x2="548" y2="360" stroke="#262C2A"/>
+  <g>
+    <rect x="52"  y="292" width="14" height="68"  rx="2" fill="#262C2A"/><rect x="52"  y="280" width="14" height="80"  rx="2" fill="#34D399"/>
+    <rect x="93"  y="298" width="14" height="62"  rx="2" fill="#262C2A"/><rect x="93"  y="288" width="14" height="72"  rx="2" fill="#34D399"/>
+    <rect x="134" y="268" width="14" height="92"  rx="2" fill="#262C2A"/><rect x="134" y="252" width="14" height="108" rx="2" fill="#F0A238"/>
+    <rect x="175" y="278" width="14" height="82"  rx="2" fill="#262C2A"/><rect x="175" y="286" width="14" height="74"  rx="2" fill="#34D399"/>
+    <rect x="216" y="290" width="14" height="70"  rx="2" fill="#262C2A"/><rect x="216" y="300" width="14" height="60"  rx="2" fill="#34D399"/>
+    <rect x="257" y="304" width="14" height="56"  rx="2" fill="#262C2A"/><rect x="257" y="314" width="14" height="46"  rx="2" fill="#34D399"/>
+    <rect x="298" y="258" width="14" height="102" rx="2" fill="#262C2A"/><rect x="298" y="268" width="14" height="92"  rx="2" fill="#34D399"/>
+    <rect x="339" y="254" width="14" height="106" rx="2" fill="#262C2A"/><rect x="339" y="264" width="14" height="96"  rx="2" fill="#34D399"/>
+    <rect x="380" y="282" width="14" height="78"  rx="2" fill="#262C2A"/><rect x="380" y="294" width="14" height="66"  rx="2" fill="#34D399"/>
+    <rect x="421" y="292" width="14" height="68"  rx="2" fill="#262C2A"/><rect x="421" y="306" width="14" height="54"  rx="2" fill="#34D399"/>
+    <rect x="462" y="286" width="14" height="74"  rx="2" fill="#262C2A"/><rect x="462" y="318" width="14" height="42"  rx="2" fill="#34D399"/>
+    <rect x="503" y="266" width="14" height="94"  rx="2" fill="#262C2A"/><rect x="503" y="312" width="14" height="48"  rx="2" fill="#34D399"/>
+  </g>
+  <g fill="#8A9490" font-size="7" text-anchor="middle" font-family="monospace" opacity="0.7">
+    <text x="59" y="374">J</text><text x="100" y="374">F</text><text x="141" y="374">M</text><text x="182" y="374">A</text>
+    <text x="223" y="374">M</text><text x="264" y="374">J</text><text x="305" y="374">J</text><text x="346" y="374">A</text>
+    <text x="387" y="374">S</text><text x="428" y="374">O</text><text x="469" y="374">N</text><text x="510" y="374">D</text>
+  </g>
+  <rect x="380" y="170" width="8" height="8" rx="1" fill="#34D399"/><text x="392" y="178" fill="#8A9490" font-size="8" font-family="monospace">OTB</text>
+  <rect x="424" y="170" width="8" height="8" rx="1" fill="#262C2A"/><text x="436" y="178" fill="#8A9490" font-size="8" font-family="monospace">BUDGET</text>
+
+  <!-- Channel mix -->
+  <rect x="580" y="154" width="296" height="240" rx="8" fill="#171B1A" stroke="#262C2A"/>
+  <text x="596" y="178" fill="#8A9490" font-size="9" font-family="monospace" letter-spacing="1.5">REVENUE BY CHANNEL</text>
+  <g transform="translate(660,290)">
+    <circle r="52" fill="none" stroke="#34D399" stroke-width="20" stroke-dasharray="134 193" transform="rotate(-90)"/>
+    <circle r="52" fill="none" stroke="#F0A238" stroke-width="20" stroke-dasharray="82 245" stroke-dashoffset="-134" transform="rotate(-90)"/>
+    <circle r="52" fill="none" stroke="#39413E" stroke-width="20" stroke-dasharray="111 216" stroke-dashoffset="-216" transform="rotate(-90)"/>
+    <text y="-2" text-anchor="middle" fill="#E8EAE7" font-size="17" font-weight="700">€2.4M</text>
+    <text y="14" text-anchor="middle" fill="#8A9490" font-size="8" font-family="monospace">THIS MONTH</text>
+  </g>
+  <g font-size="9" font-family="monospace">
+    <rect x="756" y="240" width="8" height="8" rx="1" fill="#34D399"/><text x="770" y="248" fill="#E8EAE7">Direct 41%</text>
+    <rect x="756" y="262" width="8" height="8" rx="1" fill="#F0A238"/><text x="770" y="270" fill="#E8EAE7">OTA 25%</text>
+    <rect x="756" y="284" width="8" height="8" rx="1" fill="#39413E"/><text x="770" y="292" fill="#8A9490">Other 34%</text>
+  </g>
+</svg>
+
+      </div>
+      <p class="shot-cap">Live occupancy, ADR and RevPAR &middot; 12-month OTB vs budget forecast &middot; channel mix &middot; segment performance. <b>Replaces the weekly manual revenue report.</b></p>
+    </div>
+
+    <div class="shot-panel">
+      <div class="shot">
+        <div class="shot-bar"><span class="shot-dot r"></span><span class="shot-dot y"></span><span class="shot-dot g"></span><span class="shot-label">site-operations-cockpit &mdash; live view</span></div>
+        <svg viewBox="0 0 900 420" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
+  <rect width="900" height="420" fill="#101413"/>
+
+  <rect width="900" height="44" fill="#171B1A"/>
+  <line x1="0" y1="44" x2="900" y2="44" stroke="#262C2A"/>
+  <circle cx="24" cy="22" r="7" fill="#F0A238"/>
+  <text x="40" y="26" fill="#E8EAE7" font-size="13" font-weight="600">Site Operations Cockpit</text>
+  <text x="730" y="26" fill="#8A9490" font-size="10" font-family="monospace">LIVE · 14 SITES</text>
+  <circle cx="864" cy="22" r="3" fill="#34D399"/>
+
+  <!-- KPIs -->
+  <g font-family="monospace">
+    <rect x="24" y="64" width="270" height="64" rx="8" fill="#171B1A" stroke="#262C2A"/>
+    <text x="40" y="86" fill="#8A9490" font-size="8" letter-spacing="1.5">DISPATCHES TODAY</text>
+    <text x="40" y="112" fill="#E8EAE7" font-size="24" font-weight="700" font-family="Inter">27</text>
+    <text x="90" y="112" fill="#8A9490" font-size="9">across 14 active sites</text>
+
+    <rect x="306" y="64" width="270" height="64" rx="8" fill="#171B1A" stroke="#B4541E"/>
+    <text x="322" y="86" fill="#F0A238" font-size="8" letter-spacing="1.5">VARIANCE ALERTS</text>
+    <text x="322" y="112" fill="#F0A238" font-size="24" font-weight="700" font-family="Inter">3</text>
+    <text x="370" y="112" fill="#8A9490" font-size="9">above threshold</text>
+
+    <rect x="588" y="64" width="288" height="64" rx="8" fill="#171B1A" stroke="#262C2A"/>
+    <text x="604" y="86" fill="#8A9490" font-size="8" letter-spacing="1.5">STOCK COVERAGE</text>
+    <text x="604" y="112" fill="#34D399" font-size="24" font-weight="700" font-family="Inter">6.2</text>
+    <text x="662" y="112" fill="#8A9490" font-size="9">weeks remaining</text>
+  </g>
+
+  <!-- Dispatch board -->
+  <rect x="24" y="148" width="552" height="246" rx="8" fill="#171B1A" stroke="#262C2A"/>
+  <text x="40" y="172" fill="#8A9490" font-size="9" font-family="monospace" letter-spacing="1.5">SITE DISPATCH BOARD · PLANNED vs DELIVERED</text>
+  <line x1="40" y1="184" x2="560" y2="184" stroke="#262C2A"/>
+  <g font-family="monospace" font-size="8" fill="#8A9490" opacity="0.7">
+    <text x="40" y="200">SITE</text><text x="230" y="200">TEAM</text><text x="300" y="200">PLAN</text><text x="380" y="200">DELIV</text><text x="480" y="200">STATUS</text>
+  </g>
+  <g font-size="11">
+    <text x="40" y="226" fill="#E8EAE7" font-weight="500">Site A · Zone 3</text>
+    <rect x="228" y="216" width="20" height="13" rx="3" fill="#1A6E52"/><text x="238" y="226" fill="#E8EAE7" font-size="8" text-anchor="middle" font-family="monospace">A</text>
+    <text x="300" y="226" fill="#8A9490" font-family="monospace" font-size="10">320</text><text x="380" y="226" fill="#8A9490" font-family="monospace" font-size="10">318</text>
+    <circle cx="486" cy="222" r="3" fill="#34D399"/><text x="496" y="226" fill="#34D399" font-size="9" font-family="monospace">OK</text>
+
+    <text x="40" y="256" fill="#E8EAE7" font-weight="500">Site B · Block 2</text>
+    <rect x="228" y="246" width="20" height="13" rx="3" fill="#39413E"/><text x="238" y="256" fill="#E8EAE7" font-size="8" text-anchor="middle" font-family="monospace">B</text>
+    <text x="300" y="256" fill="#8A9490" font-family="monospace" font-size="10">540</text><text x="380" y="256" fill="#F0A238" font-family="monospace" font-size="10" font-weight="700">602</text>
+    <circle cx="486" cy="252" r="3" fill="#F0A238"/><text x="496" y="256" fill="#F0A238" font-size="9" font-family="monospace">+11%</text>
+
+    <text x="40" y="286" fill="#E8EAE7" font-weight="500">Site C · Phase 1</text>
+    <rect x="228" y="276" width="20" height="13" rx="3" fill="#1A6E52"/><text x="238" y="286" fill="#E8EAE7" font-size="8" text-anchor="middle" font-family="monospace">C</text>
+    <text x="300" y="286" fill="#8A9490" font-family="monospace" font-size="10">210</text><text x="380" y="286" fill="#8A9490" font-family="monospace" font-size="10">205</text>
+    <circle cx="486" cy="282" r="3" fill="#34D399"/><text x="496" y="286" fill="#34D399" font-size="9" font-family="monospace">OK</text>
+
+    <text x="40" y="316" fill="#E8EAE7" font-weight="500">Site D · Tower</text>
+    <rect x="228" y="306" width="20" height="13" rx="3" fill="#1A6E52"/><text x="238" y="316" fill="#E8EAE7" font-size="8" text-anchor="middle" font-family="monospace">A</text>
+    <text x="300" y="316" fill="#8A9490" font-family="monospace" font-size="10">880</text><text x="380" y="316" fill="#8A9490" font-family="monospace" font-size="10">874</text>
+    <circle cx="486" cy="312" r="3" fill="#34D399"/><text x="496" y="316" fill="#34D399" font-size="9" font-family="monospace">OK</text>
+
+    <text x="40" y="346" fill="#E8EAE7" font-weight="500">Site E · Annex</text>
+    <rect x="228" y="336" width="20" height="13" rx="3" fill="#39413E"/><text x="238" y="346" fill="#E8EAE7" font-size="8" text-anchor="middle" font-family="monospace">B</text>
+    <text x="300" y="346" fill="#8A9490" font-family="monospace" font-size="10">150</text><text x="380" y="346" fill="#F0A238" font-family="monospace" font-size="10" font-weight="700">171</text>
+    <circle cx="486" cy="342" r="3" fill="#F0A238"/><text x="496" y="346" fill="#F0A238" font-size="9" font-family="monospace">+14%</text>
+  </g>
+  <text x="40" y="380" fill="#8A9490" font-size="9" font-family="monospace" opacity="0.7">// mobile dispatch → warehouse notified → stock decrements live</text>
+
+  <!-- Stock panel -->
+  <rect x="592" y="148" width="284" height="246" rx="8" fill="#171B1A" stroke="#262C2A"/>
+  <text x="608" y="172" fill="#8A9490" font-size="9" font-family="monospace" letter-spacing="1.5">STOCK · KEY MATERIALS</text>
+  <g font-size="10" font-family="monospace">
+    <text x="608" y="204" fill="#E8EAE7">Material X</text><text x="860" y="204" fill="#34D399" text-anchor="end">72%</text>
+    <rect x="608" y="212" width="252" height="5" rx="2.5" fill="#262C2A"/><rect x="608" y="212" width="181" height="5" rx="2.5" fill="#34D399"/>
+    <text x="608" y="244" fill="#E8EAE7">Material Y</text><text x="860" y="244" fill="#F0A238" text-anchor="end">38%</text>
+    <rect x="608" y="252" width="252" height="5" rx="2.5" fill="#262C2A"/><rect x="608" y="252" width="96" height="5" rx="2.5" fill="#F0A238"/>
+    <text x="608" y="284" fill="#E8EAE7">Material Z</text><text x="860" y="284" fill="#E85C41" text-anchor="end">14%</text>
+    <rect x="608" y="292" width="252" height="5" rx="2.5" fill="#262C2A"/><rect x="608" y="292" width="35" height="5" rx="2.5" fill="#E85C41"/>
+  </g>
+  <rect x="608" y="320" width="252" height="54" rx="6" fill="#0F1F19" stroke="#1A6E52"/>
+  <text x="622" y="342" fill="#34D399" font-size="9" font-family="monospace" letter-spacing="1">AUTO-REORDER SUGGESTED</text>
+  <text x="622" y="360" fill="#E8EAE7" font-size="10" font-family="monospace">Material Z → +480 units</text>
+</svg>
+
+      </div>
+      <p class="shot-cap">Dispatch board with planned-vs-delivered variance &middot; live stock levels &middot; auto reorder &middot; mobile dispatch from the field. <b>Every dispatch decrements stock in real time.</b></p>
+    </div>
+
+    <div class="shot-panel">
+      <div class="shot">
+        <div class="shot-bar"><span class="shot-dot r"></span><span class="shot-dot y"></span><span class="shot-dot g"></span><span class="shot-label">financial-cockpit &mdash; FY view</span></div>
+        <svg viewBox="0 0 900 420" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
+  <rect width="900" height="420" fill="#101413"/>
+
+  <rect width="900" height="44" fill="#171B1A"/>
+  <line x1="0" y1="44" x2="900" y2="44" stroke="#262C2A"/>
+  <circle cx="24" cy="22" r="7" fill="#34D399"/>
+  <text x="40" y="26" fill="#E8EAE7" font-size="13" font-weight="600">Financial Cockpit</text>
+  <text x="700" y="26" fill="#8A9490" font-size="10" font-family="monospace">FY 2026 · YTD · NET</text>
+  <circle cx="864" cy="22" r="3" fill="#34D399"/>
+
+  <!-- KPIs -->
+  <g font-family="monospace">
+    <rect x="24" y="64" width="200" height="70" rx="8" fill="#171B1A" stroke="#262C2A"/>
+    <text x="40" y="86" fill="#8A9490" font-size="8" letter-spacing="1.5">REVENUE YTD</text>
+    <text x="40" y="116" fill="#E8EAE7" font-size="24" font-weight="700" font-family="Inter">€8.4M</text>
+    <text x="140" y="116" fill="#34D399" font-size="9">+7.2%</text>
+
+    <rect x="236" y="64" width="200" height="70" rx="8" fill="#171B1A" stroke="#262C2A"/>
+    <text x="252" y="86" fill="#8A9490" font-size="8" letter-spacing="1.5">GROSS MARGIN</text>
+    <text x="252" y="116" fill="#E8EAE7" font-size="24" font-weight="700" font-family="Inter">41.6%</text>
+    <text x="356" y="116" fill="#34D399" font-size="9">+1.8</text>
+
+    <rect x="448" y="64" width="200" height="70" rx="8" fill="#171B1A" stroke="#1A6E52"/>
+    <text x="464" y="86" fill="#34D399" font-size="8" letter-spacing="1.5">EBITDA</text>
+    <text x="464" y="116" fill="#34D399" font-size="24" font-weight="700" font-family="Inter">€1.9M</text>
+    <text x="568" y="116" fill="#8A9490" font-size="9">22.4%</text>
+
+    <rect x="660" y="64" width="216" height="70" rx="8" fill="#171B1A" stroke="#262C2A"/>
+    <text x="676" y="86" fill="#8A9490" font-size="8" letter-spacing="1.5">CASH POSITION</text>
+    <text x="676" y="116" fill="#E8EAE7" font-size="24" font-weight="700" font-family="Inter">€2.1M</text>
+    <text x="784" y="116" fill="#34D399" font-size="9">9.4 mo</text>
+  </g>
+
+  <!-- EBITDA trend -->
+  <rect x="24" y="154" width="540" height="240" rx="8" fill="#171B1A" stroke="#262C2A"/>
+  <text x="40" y="178" fill="#8A9490" font-size="9" font-family="monospace" letter-spacing="1.5">MONTHLY EBITDA · ACTUAL vs BUDGET</text>
+  <line x1="40" y1="360" x2="548" y2="360" stroke="#262C2A"/>
+  <line x1="40" y1="310" x2="548" y2="310" stroke="#1E2523"/>
+  <line x1="40" y1="260" x2="548" y2="260" stroke="#1E2523"/>
+  <line x1="40" y1="210" x2="548" y2="210" stroke="#1E2523"/>
+
+  <polyline points="60,318 103,312 146,306 189,302 232,294 275,288 318,284 361,278 404,274 447,268 490,262 533,256"
+    fill="none" stroke="#39413E" stroke-width="2" stroke-dasharray="4 4"/>
+  <polyline points="60,324 103,304 146,310 189,290 232,296 275,270 318,286 361,262 404,278 447,248 490,260 533,236"
+    fill="none" stroke="#34D399" stroke-width="2.5"/>
+  <g fill="#F0A238">
+    <circle cx="361" cy="262" r="3"/><circle cx="447" cy="248" r="3"/><circle cx="533" cy="236" r="3"/>
+  </g>
+  <g fill="#8A9490" font-size="7" text-anchor="middle" font-family="monospace" opacity="0.7">
+    <text x="60" y="374">J</text><text x="103" y="374">F</text><text x="146" y="374">M</text><text x="189" y="374">A</text>
+    <text x="232" y="374">M</text><text x="275" y="374">J</text><text x="318" y="374">J</text><text x="361" y="374">A</text>
+    <text x="404" y="374">S</text><text x="447" y="374">O</text><text x="490" y="374">N</text><text x="533" y="374">D</text>
+  </g>
+  <rect x="380" y="170" width="12" height="2" fill="#34D399"/><text x="398" y="175" fill="#8A9490" font-size="8" font-family="monospace">ACTUAL</text>
+  <rect x="452" y="170" width="12" height="2" fill="#39413E"/><text x="470" y="175" fill="#8A9490" font-size="8" font-family="monospace">BUDGET</text>
+
+  <!-- P&L variance -->
+  <rect x="580" y="154" width="296" height="240" rx="8" fill="#171B1A" stroke="#262C2A"/>
+  <text x="596" y="178" fill="#8A9490" font-size="9" font-family="monospace" letter-spacing="1.5">P&amp;L · BUDGET vs ACTUAL</text>
+  <line x1="596" y1="190" x2="860" y2="190" stroke="#262C2A"/>
+  <g font-family="monospace" font-size="10">
+    <text x="596" y="216" fill="#E8EAE7">Revenue</text>
+    <text x="780" y="216" fill="#8A9490" text-anchor="end">7.8</text><text x="820" y="216" fill="#E8EAE7" text-anchor="end">8.4</text>
+    <text x="860" y="216" fill="#34D399" text-anchor="end">+7%</text>
+
+    <text x="596" y="246" fill="#E8EAE7">COGS</text>
+    <text x="780" y="246" fill="#8A9490" text-anchor="end">4.6</text><text x="820" y="246" fill="#E8EAE7" text-anchor="end">4.9</text>
+    <text x="860" y="246" fill="#F0A238" text-anchor="end">+6%</text>
+
+    <text x="596" y="276" fill="#E8EAE7">OPEX</text>
+    <text x="780" y="276" fill="#8A9490" text-anchor="end">3.5</text><text x="820" y="276" fill="#E8EAE7" text-anchor="end">3.6</text>
+    <text x="860" y="276" fill="#F0A238" text-anchor="end">+3%</text>
+
+    <text x="596" y="306" fill="#34D399" font-weight="700">EBITDA</text>
+    <text x="780" y="306" fill="#8A9490" text-anchor="end">1.7</text><text x="820" y="306" fill="#34D399" text-anchor="end" font-weight="700">1.9</text>
+    <text x="860" y="306" fill="#34D399" text-anchor="end" font-weight="700">+12%</text>
+  </g>
+  <line x1="596" y1="322" x2="860" y2="322" stroke="#262C2A"/>
+  <rect x="596" y="336" width="264" height="42" rx="6" fill="#0F1F19" stroke="#1A6E52"/>
+  <text x="610" y="354" fill="#34D399" font-size="9" font-family="monospace" letter-spacing="1">SOURCED FROM ACCOUNTING EXPORT</text>
+  <text x="610" y="370" fill="#8A9490" font-size="9" font-family="monospace">no manual re-entry · refreshed daily</text>
+</svg>
+
+      </div>
+      <p class="shot-cap">Revenue, margin, EBITDA and cash KPIs &middot; actual vs budget trend &middot; cost structure &middot; P&amp;L variance. <b>Built straight on the accounting export.</b></p>
+    </div>
+  </div>
+</section>
+
+<!-- 06 CASE STUDIES (BEFORE / AFTER) -->
+<section class="slide" id="s6" data-idx="06 / 10">
+  <div class="tag">Before / after</div>
+  <h2>Two cockpits, two industries, one pattern.</h2>
+  <p class="lede">Every cockpit starts as a manual process someone was dreading. Here's what changed.</p>
+
+  <div class="cases">
+    <div class="case">
+      <div class="case-head">
+        <div>
+          <div class="case-sector">Hospitality &middot; premium resorts</div>
+          <div class="case-name">Revenue Cockpit</div>
+        </div>
+      </div>
+      <div class="case-body">
+        <div class="case-block">
+          <div class="case-lbl before">&#9632; Before</div>
+          <p class="case-text">Booking data lived in the PMS but had to be pulled and consolidated by hand in Excel every week. No consolidated view across the group's properties. Leadership had no fast answer to <b>"how much did we sell yesterday, and on which channels?"</b> Reporting to head office took hours.</p>
+        </div>
+        <div class="case-block">
+          <div class="case-lbl after">&#9679; After</div>
+          <p class="case-text">One revenue cockpit wired to the PMS. Daily pickup, 12-month forecast, occupancy, ADR, RevPAR, channel split, cancellation tracking, automatic alerts. <b>Leadership opens their phone and reads the business in 30 seconds.</b> The weekly manual report is gone.</p>
+        </div>
       </div>
     </div>
-    <div class="ck">
-      <div class="ck-live"></div>
-      <div class="ck-sector">Legal / Admin</div>
-      <div>
-        <div class="ck-name">Contract Management</div>
-        <p class="ck-desc">Contract lifecycle, renewal alerts and obligation tracking — no more missed deadlines.</p>
+
+    <div class="case">
+      <div class="case-head">
+        <div>
+          <div class="case-sector">Construction &middot; materials</div>
+          <div class="case-name">Site Operations Cockpit</div>
+        </div>
+      </div>
+      <div class="case-body">
+        <div class="case-block">
+          <div class="case-lbl before">&#9632; Before</div>
+          <p class="case-text">The whole chain &mdash; quote to site delivery &mdash; ran on carbon PDF forms, a shared spreadsheet and manual re-entry. No real-time view of what was dispatched to which site. Delivered-vs-planned control was done by hand, <b>with undetected variances slipping through.</b></p>
+        </div>
+        <div class="case-block">
+          <div class="case-lbl after">&#9679; After</div>
+          <p class="case-text">One app drives the entire chain. The project manager creates a dispatch from mobile, the storekeeper is notified, stock decrements live, and a dashboard flags <b>any variance beyond threshold instantly.</b> Material quantities are auto-calculated from surface areas. Real-time view on every active site.</p>
+        </div>
       </div>
     </div>
-    <div class="ck">
-      <div class="ck-live"></div>
-      <div class="ck-sector">Retail</div>
-      <div>
-        <div class="ck-name">Operational Cockpit</div>
-        <p class="ck-desc">Store-level performance, stock movement and daily operations centralised in real time.</p>
-      </div>
-    </div>
-    <div class="ck">
-      <div class="ck-live"></div>
-      <div class="ck-sector">Finance</div>
-      <div>
-        <div class="ck-name">Treasury Forecasting</div>
-        <p class="ck-desc">Cash position and forward projection — built to replace the monthly spreadsheet ritual.</p>
-      </div>
-    </div>
-    <div class="ck">
-      <div class="ck-live"></div>
-      <div class="ck-sector">Project Ops</div>
-      <div>
-        <div class="ck-name">ClickUp Replacement</div>
-        <p class="ck-desc">A custom project system fitted to how the team actually works, not the other way round.</p>
-      </div>
-    </div>
-    <div class="ck">
-      <div class="ck-live"></div>
-      <div class="ck-sector">Customer Service</div>
-      <div>
-        <div class="ck-name">AI Chatbot</div>
-        <p class="ck-desc">First-line customer handling, trained on the company's own documentation and processes.</p>
-      </div>
+  </div>
+
+  <div class="sectors-strip">
+    <div class="sectors-lbl">// Also deployed across</div>
+    <div class="sectors-chips">
+      <span class="sector-chip">Real Estate</span>
+      <span class="sector-chip">Tourism &amp; Hospitality</span>
+      <span class="sector-chip">Construction</span>
+      <span class="sector-chip">Retail</span>
+      <span class="sector-chip">Digital Agency</span>
+      <span class="sector-chip">Fintech</span>
+      <span class="sector-chip" style="border-color:var(--wire);color:var(--mist);">Finance</span>
+      <span class="sector-chip" style="border-color:var(--wire);color:var(--mist);">Revenue</span>
+      <span class="sector-chip" style="border-color:var(--wire);color:var(--mist);">Stock</span>
+      <span class="sector-chip" style="border-color:var(--wire);color:var(--mist);">CRM</span>
+      <span class="sector-chip" style="border-color:var(--wire);color:var(--mist);">Accounting</span>
     </div>
   </div>
 </section>
 
 <!-- 06 METHODOLOGY -->
-<section class="slide" id="s6" data-idx="06 / 09">
+<section class="slide" id="s7" data-idx="07 / 10">
   <div class="tag">How it runs</div>
-  <h2>Three phases. One working system at the end.</h2>
-  <p class="lede">This is not a seminar. Your team walks in with a problem and walks out with a roadmap — and in most cases, a first working automation.</p>
+  <h2>3 workshops. ~3 weeks. A working cockpit at the end.</h2>
+  <p class="lede">This is not a seminar and it is not a 6-month BI project. Three workshop sessions over about three weeks, with development running in parallel — your team walks out with a cockpit that actually runs.</p>
 
   <div class="phases">
     <div class="ph">
-      <div class="ph-n">PHASE 01</div>
+      <div class="ph-n">SESSION 01</div>
       <div class="ph-h">Assess<br>& Discover</div>
       <ul class="ph-list">
         <li>Business and process review</li>
         <li>Department interviews</li>
-        <li>AI readiness assessment</li>
+        <li>Needs mapped live</li>
         <li>High-impact opportunities identified</li>
       </ul>
     </div>
     <div class="ph">
-      <div class="ph-n">PHASE 02</div>
-      <div class="ph-h">Practical<br>Workshops</div>
+      <div class="ph-n">SESSION 02</div>
+      <div class="ph-h">Build<br>& Automate</div>
       <ul class="ph-list">
-        <li>Hands-on AI exercises</li>
-        <li>Your real use cases, not generic ones</li>
+        <li>Hands-on, your real use cases</li>
         <li>Low-code / no-code automation</li>
+        <li>Cockpit built in parallel</li>
         <li>Live demonstrations</li>
       </ul>
     </div>
     <div class="ph final">
-      <div class="ph-n">PHASE 03</div>
-      <div class="ph-h">Cockpit<br>& Roadmap</div>
+      <div class="ph-n">SESSION 03</div>
+      <div class="ph-h">Deliver<br>& Roadmap</div>
       <ul class="ph-list">
+        <li>Working cockpit handed over</li>
         <li>AI Opportunity Report</li>
         <li>Priority automation use cases</li>
-        <li>Cockpit specification</li>
         <li>Implementation roadmap</li>
       </ul>
     </div>
   </div>
+
+  <div style="margin-top:2rem;display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;padding:1.25rem 1.75rem;border:1px solid var(--signal-dim);border-radius:8px;background:linear-gradient(140deg,rgba(26,110,82,0.12),transparent);">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--signal);font-weight:600;">8h · 3 sessions · ~3 weeks</div>
+    <div style="width:1px;height:24px;background:var(--line);"></div>
+    <div style="font-size:0.9rem;color:var(--mist);font-weight:300;">Workshops are <b style="color:var(--text);font-weight:500;">MQA/HRDC-eligible — up to 90% refundable.</b> Compare that to the 6 months of a classic BI project.</div>
+  </div>
 </section>
 
 <!-- 07 WHO IT'S FOR -->
-<section class="slide" id="s7" data-idx="07 / 09">
+<section class="slide" id="s8" data-idx="08 / 10">
   <div class="tag">Who should be in the room</div>
   <h2>No coding. No technical background. No exceptions.</h2>
   <p class="lede">The people who know where the time is wasted are the ones running the process — not the IT department. That is who this programme is built for.</p>
@@ -718,7 +1134,7 @@
 </section>
 
 <!-- 08 PRICING -->
-<section class="slide" id="s8" data-idx="08 / 09">
+<section class="slide" id="s9" data-idx="09 / 10">
   <div class="tag">The numbers</div>
   <h2>What it costs — and what it actually costs.</h2>
   <p class="lede">The list price is not the price you pay. Your Training Levy contribution is already sitting with the HRDC. We help you claim it back.</p>
@@ -740,7 +1156,7 @@
 </section>
 
 <!-- 09 CTA -->
-<section class="slide" id="s9" data-idx="09 / 09">
+<section class="slide" id="s10" data-idx="10 / 10">
   <div class="tag">Next step</div>
   <h2>Start with the audit. It costs you nothing.</h2>
   <p class="lede">Before you commit to any training, we tell you exactly how much Levy you have available and what it can fund.</p>
@@ -761,5 +1177,13 @@
   </div>
 </section>
 
+<script>
+function showShot(idx, btn) {
+  const showcase = btn.closest('.showcase');
+  showcase.querySelectorAll('.shot-panel').forEach((p, i) => p.classList.toggle('active', i === idx));
+  showcase.querySelectorAll('.shot-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+}
+</script>
 </body>
 </html>
